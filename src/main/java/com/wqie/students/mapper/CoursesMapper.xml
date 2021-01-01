@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqie.students.mapper.CoursesMapper">
+  <resultMap id="BaseResultMap" type="com.wqie.students.model.Courses">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="CNO" jdbcType="NUMERIC" property="cno" />
+    <result column="CNAME" jdbcType="VARCHAR" property="cname" />
+    <result column="CREDIT" jdbcType="NUMERIC" property="credit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CNO, CNAME, CREDIT, TNO
+  </sql>
+  <select id="selectSumCreditBySno" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    SUM(C.CREDIT)
+    from T_COURSES C
+    join T_SELECTCOURSE S
+    on C.CNO = S.CNO
+    where S.SNO = #{sno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectCnameByCno" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select
+    CNAME
+    from T_COURSES
+    where CNO = #{cno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectSumCreditBySnoAndSemester" resultType="java.lang.Integer">
+    select
+    SUM(C.CREDIT)
+    from T_COURSES C
+    join T_SELECTCOURSE S
+    on C.CNO = S.CNO
+    where S.SNO = #{sno,jdbcType=NUMERIC}
+    and S.SEMESTER = #{semester,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCreditByCno" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    CREDIT
+    from T_COURSES
+    where CNO = #{cno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectTnoByCno" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    TNO
+    from T_COURSES
+    where CNO = #{cno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectAll" resultType="com.wqie.students.model.Courses">
+    select
+    <include refid="Base_Column_List" />
+    from T_COURSES
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_COURSES
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from T_COURSES
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.wqie.students.model.Courses">
+    insert into T_COURSES (ID, CNO, CNAME, 
+      CREDIT, TNO)
+    values (#{id,jdbcType=NUMERIC}, #{cno,jdbcType=NUMERIC}, #{cname,jdbcType=VARCHAR}, 
+      #{credit,jdbcType=NUMERIC}, #{tno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqie.students.model.Courses">
+    insert into T_COURSES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cno != null">
+        CNO,
+      </if>
+      <if test="cname != null">
+        CNAME,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="tno != null">
+        TNO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="cno != null">
+        #{cno,jdbcType=NUMERIC},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=NUMERIC},
+      </if>
+      <if test="tno != null">
+        #{tno,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqie.students.model.Courses">
+    update T_COURSES
+    <set>
+      <if test="cno != null">
+        CNO = #{cno,jdbcType=NUMERIC},
+      </if>
+      <if test="cname != null">
+        CNAME = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=NUMERIC},
+      </if>
+      <if test="tno != null">
+        TNO = #{tno,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqie.students.model.Courses">
+    update T_COURSES
+    set CNO = #{cno,jdbcType=NUMERIC},
+      CNAME = #{cname,jdbcType=VARCHAR},
+      CREDIT = #{credit,jdbcType=NUMERIC},
+      TNO = #{tno,jdbcType=NUMERIC}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

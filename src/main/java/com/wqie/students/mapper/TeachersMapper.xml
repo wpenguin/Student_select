@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqie.students.mapper.TeachersMapper">
+  <resultMap id="BaseResultMap" type="com.wqie.students.model.Teachers">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="TNO" jdbcType="NUMERIC" property="tno" />
+    <result column="TNAME" jdbcType="VARCHAR" property="tname" />
+    <result column="TSEX" jdbcType="VARCHAR" property="tsex" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TNO, TNAME, TSEX
+  </sql>
+  <select id="selectTnameByTno" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select
+    TNAME
+    from T_TEACHERS
+    where TNO = #{tno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_TEACHERS
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from T_TEACHERS
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.wqie.students.model.Teachers">
+    insert into T_TEACHERS (ID, TNO, TNAME, 
+      TSEX)
+    values (#{id,jdbcType=NUMERIC}, #{tno,jdbcType=NUMERIC}, #{tname,jdbcType=VARCHAR}, 
+      #{tsex,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqie.students.model.Teachers">
+    insert into T_TEACHERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="tno != null">
+        TNO,
+      </if>
+      <if test="tname != null">
+        TNAME,
+      </if>
+      <if test="tsex != null">
+        TSEX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="tno != null">
+        #{tno,jdbcType=NUMERIC},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsex != null">
+        #{tsex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqie.students.model.Teachers">
+    update T_TEACHERS
+    <set>
+      <if test="tno != null">
+        TNO = #{tno,jdbcType=NUMERIC},
+      </if>
+      <if test="tname != null">
+        TNAME = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tsex != null">
+        TSEX = #{tsex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqie.students.model.Teachers">
+    update T_TEACHERS
+    set TNO = #{tno,jdbcType=NUMERIC},
+      TNAME = #{tname,jdbcType=VARCHAR},
+      TSEX = #{tsex,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

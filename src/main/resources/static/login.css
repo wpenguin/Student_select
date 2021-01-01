@@ -1,0 +1,103 @@
+*{
+    padding: 0;
+    margin: 0;
+    background: rgb(204,232,207);
+}
+#box{
+    width: 610px;
+    height: 300px;
+    margin: 100px auto;
+    border-radius: 50px;
+    background: whitesmoke;
+}
+#box form,table,td{
+    background: whitesmoke;
+}
+#box form{
+    border-radius: 50px;
+}
+#box table{
+    width: 445px;
+    height: 260px;
+    border-radius: 50px;
+    margin-left: 200px;
+    text-align: center;
+    display: inline;
+}
+#box input{
+    width: 230px;
+    height: 50px;
+    background: lightgray;
+    border-radius: 50px;
+    padding-left: 25px;
+    font-size: 22px;
+    font-weight: bold;
+}
+.name{
+    font-size: 22px;
+}
+.bton{
+    width: 80px;
+    line-height: 32px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    background: black;
+    text-shadow:1px 1px 1px #333;
+    border-radius: 5px;
+    margin-left: 40px;
+    position: relative;
+    overflow: hidden;
+}
+.bton:hover{
+    color: black;
+    background: white;
+    cursor: pointer;
+}
+#return{
+    display: block;
+    text-decoration: none;
+    border-radius: 10px;
+    background: white;
+    width: 70px;
+    margin-left: 20px;
+    margin-top: 20px;
+    text-align: center;
+    line-height: 38px;
+    color: black;
+    font-weight: bold;
+    height: 40px;
+    font-size: 18px;
+}
+#return:hover{
+    background: black;
+    color: white;
+}
+#pbox{
+    width: 165px;
+    height: 220px;
+    float: left;
+    margin-top: 1.5px;
+    margin-left: 40px;
+}
+#p{
+    width: 165px;
+    height: 298px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

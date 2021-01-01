@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqie.students.mapper.SelectCourseMapper">
+  <resultMap id="BaseResultMap" type="com.wqie.students.model.SelectCourse">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="SNO" jdbcType="NUMERIC" property="sno" />
+    <result column="CNO" jdbcType="NUMERIC" property="cno" />
+    <result column="TNO" jdbcType="NUMERIC" property="tno" />
+    <result column="SEMESTER" jdbcType="VARCHAR" property="semester" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SNO, CNO, TNO, SEMESTER, CREDIT
+  </sql>
+  <select id="selectNoIn" parameterType="com.wqie.students.model.SelectNoIn" resultType="java.lang.Integer">
+    select
+    count(id)
+    from T_SELECTCOURSE
+    where
+    <trim suffixOverrides=" AND">
+      <if test="sno != null">
+        SNO = #{sno,jdbcType=NUMERIC} AND
+      </if>
+      <if test="cno != null">
+        CNO = #{cno,jdbcType=NUMERIC} AND
+      </if>
+      <if test="semester != null">
+        SEMESTER = #{semester,jdbcType=VARCHAR} AND
+      </if>
+    </trim>
+  </select>
+  <select id="selectMaxId" resultType="java.lang.Integer">
+    select
+    MAX(ID)
+    from T_SELECTCOURSE
+  </select>
+  <select id="selectSumByTno" resultType="java.lang.Integer">
+    select
+    COUNT(ID)
+    from T_SELECTCOURSE
+    where TNO=#{tno,jdbcType=NUMERIC}
+    and SEMESTER=#{semester,jdbcType=VARCHAR}
+  </select>
+  <select id="selectMySelectCourse" parameterType="java.lang.Integer" resultType="com.wqie.students.model.SelectCourse">
+    select
+    <include refid="Base_Column_List" />
+    from T_SELECTCOURSE
+    where SNO = #{sno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectMySelectCourseBySemester" resultType="com.wqie.students.model.SelectCourse">
+    select
+    <include refid="Base_Column_List" />
+    from T_SELECTCOURSE
+    where SNO = #{sno,jdbcType=NUMERIC}
+    and SEMESTER = #{semester,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_SELECTCOURSE
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from T_SELECTCOURSE
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteMySelectCourse" parameterType="com.wqie.students.model.SelectNoIn">
+    delete
+    from T_SELECTCOURSE
+    where
+    <trim suffixOverrides=" AND">
+      <if test="sno != null">
+        SNO = #{sno,jdbcType=NUMERIC} AND
+      </if>
+      <if test="cno != null">
+        CNO = #{cno,jdbcType=NUMERIC} AND
+      </if>
+      <if test="semester != null">
+        SEMESTER = #{semester,jdbcType=VARCHAR} AND
+      </if>
+    </trim>
+  </delete>
+  <insert id="insert" parameterType="com.wqie.students.model.SelectCourse">
+    insert into T_SELECTCOURSE (ID, SNO, CNO, 
+      TNO, SEMESTER, CREDIT)
+    values (#{id,jdbcType=NUMERIC}, #{sno,jdbcType=NUMERIC}, #{cno,jdbcType=NUMERIC}, 
+      #{tno,jdbcType=NUMERIC}, #{semester,jdbcType=VARCHAR}, #{credit,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqie.students.model.SelectCourse">
+    insert into T_SELECTCOURSE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="sno != null">
+        SNO,
+      </if>
+      <if test="cno != null">
+        CNO,
+      </if>
+      <if test="tno != null">
+        TNO,
+      </if>
+      <if test="semester != null">
+        SEMESTER,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="sno != null">
+        #{sno,jdbcType=NUMERIC},
+      </if>
+      <if test="cno != null">
+        #{cno,jdbcType=NUMERIC},
+      </if>
+      <if test="tno != null">
+        #{tno,jdbcType=NUMERIC},
+      </if>
+      <if test="semester != null">
+        #{semester,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqie.students.model.SelectCourse">
+    update T_SELECTCOURSE
+    <set>
+      <if test="sno != null">
+        SNO = #{sno,jdbcType=NUMERIC},
+      </if>
+      <if test="cno != null">
+        CNO = #{cno,jdbcType=NUMERIC},
+      </if>
+      <if test="tno != null">
+        TNO = #{tno,jdbcType=NUMERIC},
+      </if>
+      <if test="semester != null">
+        SEMESTER = #{semester,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqie.students.model.SelectCourse">
+    update T_SELECTCOURSE
+    set SNO = #{sno,jdbcType=NUMERIC},
+      CNO = #{cno,jdbcType=NUMERIC},
+      TNO = #{tno,jdbcType=NUMERIC},
+      SEMESTER = #{semester,jdbcType=VARCHAR},
+      CREDIT = #{credit,jdbcType=NUMERIC}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

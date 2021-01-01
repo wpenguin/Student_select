@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqie.students.mapper.StudentsMapper">
+  <resultMap id="BaseResultMap" type="com.wqie.students.model.Students">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="SNO" jdbcType="NUMERIC" property="sno" />
+    <result column="SNAME" jdbcType="VARCHAR" property="sname" />
+    <result column="SSEX" jdbcType="VARCHAR" property="ssex" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SNO, SNAME, SSEX
+  </sql>
+  <select id="selectAllBySno" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from T_STUDENTS
+    where SNO = #{sno,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_STUDENTS
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from T_STUDENTS
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.wqie.students.model.Students">
+    insert into T_STUDENTS (ID, SNO, SNAME, 
+      SSEX)
+    values (#{id,jdbcType=NUMERIC}, #{sno,jdbcType=NUMERIC}, #{sname,jdbcType=VARCHAR}, 
+      #{ssex,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqie.students.model.Students">
+    insert into T_STUDENTS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="sno != null">
+        SNO,
+      </if>
+      <if test="sname != null">
+        SNAME,
+      </if>
+      <if test="ssex != null">
+        SSEX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="sno != null">
+        #{sno,jdbcType=NUMERIC},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="ssex != null">
+        #{ssex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqie.students.model.Students">
+    update T_STUDENTS
+    <set>
+      <if test="sno != null">
+        SNO = #{sno,jdbcType=NUMERIC},
+      </if>
+      <if test="sname != null">
+        SNAME = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="ssex != null">
+        SSEX = #{ssex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqie.students.model.Students">
+    update T_STUDENTS
+    set SNO = #{sno,jdbcType=NUMERIC},
+      SNAME = #{sname,jdbcType=VARCHAR},
+      SSEX = #{ssex,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>
